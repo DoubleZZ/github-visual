@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getRepo, getContributors } from '../services/getInformations';
+import { getRepo, getContributors, getBranches } from '../services/getInformations';
 import "./Informations.css";
 import Utilisateur from "./Utilisateur"
 
@@ -7,18 +7,17 @@ export default class Informations extends Component {
     state = {
         repoName : [],
         contributors : [],
+        branches : [],
     }
 
     async componentDidMount(){
         const {repo} = this.props;
         const repoName = await getRepo(repo);
         const contributors = await getContributors(repo);
-        this.setState({repoName, contributors});
+        const branches = await getBranches(repo);
+        this.setState({repoName, contributors, branches});
     }
 
-    async componentDidCatch(){
-        const {repo} = this.props;
-    }
 
     render(){
         const{repo} = this.props;
@@ -28,6 +27,16 @@ export default class Informations extends Component {
                 <div className="general">
                     <h2>{repoName.name}</h2>
                     <h3>{repoName.description}</h3>
+                </div>
+
+                <div className="branches">
+                    <ul>
+                    { this.state.branches.map(branche =>
+                    <li>
+                        <a href={this.state.repoName.html_url + "/tree/" + branche.name}>{branche.name}</a>
+                    </li>
+	  			)}
+                    </ul>
                 </div>
 
                 <div className="contributors">
