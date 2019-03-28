@@ -7,7 +7,12 @@ export default class Utilisateur extends Component {
     state = {
         userName : [],
         userRepos : [],
-        info : "test",
+        show : false,
+    }
+
+    constructor(){
+        super()
+        this.handleClick = this.handleClick.bind(this);
     }
 
     renderUserRepos(){
@@ -33,8 +38,8 @@ export default class Utilisateur extends Component {
     }
 
     handleClick(){
-        const info = "autre message";
-        this.setState({info})
+        const show = true;
+        this.setState({show})
     }
 
     async componentDidMount(){
@@ -56,7 +61,7 @@ export default class Utilisateur extends Component {
             <fieldset onClick={this.handleClick}>
 	  			<legend>{userName.login}</legend>
 	  			<img src={userName.avatar_url} alt="avatar"/>
-                  {info}
+                {this.renderUserRepos()}
 	  		</fieldset>
         )
         

@@ -6,11 +6,20 @@ import Informations from "./components/Informations"
 class App extends Component {
   state = {
     repoName: 'TypedProject/ts-express-decorators',
-    description : true,
-    branches : true,
-    link : true,
-    collaborators: true,
+    description : false,
+    branches : false,
+    link : false,
+    collaborators: false,
   };
+
+  constructor(){
+    super()
+    this.handleChange = this.handleChange.bind(this);
+    this.changeDescription = this.changeDescription.bind(this);
+    this.changeBranches = this.changeBranches.bind(this);
+    this.changeLink = this.changeLink.bind(this);
+    this.changeCollaborators = this.changeCollaborators.bind(this);
+  }
 
   handleChange(event) {
     console.log(event.target.value);
@@ -45,13 +54,13 @@ class App extends Component {
               <input type="checkbox" name="description" id="description" onClick={this.changeDescription} /><label for="description">Description / stars</label>
             </li>
             <li>
-              <input type="checkbox" name="branches" id="branches" onChange={this.changeBranches}/><label for="branches">URL des branches</label>
+              <input type="checkbox" name="branches" id="branches" onClick={this.changeBranches}/><label for="branches">URL des branches</label>
             </li>
             <li>
-              <input type="checkbox" name="link" id="link" onChange={this.changeLink}/><label for="link">Lien vers page Github</label>
+              <input type="checkbox" name="link" id="link" onClick={this.changeLink}/><label for="link">Lien vers page Github</label>
             </li>
             <li>
-              <input type="checkbox" name="collaborators" id="collaborators" onChange={this.changeCollaborators}/><label for="collaborators">Liste les collaborateurs</label>
+              <input type="checkbox" name="collaborators" id="collaborators" onClick={this.changeCollaborators}/><label for="collaborators">Liste les collaborateurs</label>
             </li>
           </ul>
         </div>
@@ -60,11 +69,11 @@ class App extends Component {
   }
 
   render() {
-    const {repoName} = this.state;
+    const {repoName, description, branches, link, collaborators} = this.state;
     return (
       <div className="App">
         {this.renderForm()}
-        <Informations repo={repoName}/>
+        <Informations repo={repoName} description={description} branches={branches} />
       </div>
     );
   }

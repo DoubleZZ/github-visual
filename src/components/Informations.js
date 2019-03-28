@@ -26,9 +26,11 @@ export default class Informations extends Component {
             <div className="informations">
                 <div className="general">
                     <h2>{repoName.name}</h2>
+                    {this.props.description.toString()}
                     <h3>{repoName.description}</h3>
                 </div>
 
+                {this.props.branches.toString()}
                 <div className="branches">
                     <ul>
                     { this.state.branches.map(branche =>
