@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { getRepo, getContributors } from '../services/getInformations';
 import "./Informations.css";
+import Utilisateur from "./Utilisateur"
 
 export default class Informations extends Component {
     state = {
@@ -17,7 +18,6 @@ export default class Informations extends Component {
 
     async componentDidCatch(){
         const {repo} = this.props;
-        alert(repo);
     }
 
     render(){
@@ -32,10 +32,7 @@ export default class Informations extends Component {
 
                 <div className="contributors">
                 { this.state.contributors.map(contributor =>
-	  				<fieldset>
-	  					<legend>{contributor.login}</legend>
-	  					<img src={contributor.avatar_url} alt="avatar"/>
-	  				</fieldset>
+                    <Utilisateur user={contributor.login} avatar={contributor.avatar_url} />
 	  			)}
                 </div>
             </div>
