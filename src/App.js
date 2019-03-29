@@ -12,19 +12,20 @@ class App extends Component {
     collaborators: false,
   };
 
-  constructor(){
-    super()
-    this.handleChange = this.handleChange.bind(this);
+  constructor(props){
+    super(props)
+    this.handleClick = this.handleClick.bind(this)
     this.changeDescription = this.changeDescription.bind(this);
     this.changeBranches = this.changeBranches.bind(this);
     this.changeLink = this.changeLink.bind(this);
     this.changeCollaborators = this.changeCollaborators.bind(this);
+    this.refInputSearch = React.createRef();
   }
 
-  handleChange(event) {
-    console.log(event.target.value);
-    //this.state.repoName = event.target.value;
-    this.setState({repoName : event.target.value});
+  handleClick(event){
+    const repoName = this.refInputSearch.current.value
+    console.log('current', repoName)
+    this.setState({ repoName });
   }
 
   changeDescription(event){
@@ -48,7 +49,8 @@ class App extends Component {
       <div>
         <div>
           <label>Nom du repository : </label>
-          <input type="text" onChange={this.handleChange} />
+          <input type="text" value={this.state.value} ref={this.refInputSearch}  />
+          <button onClick={this.handleClick}>Envoyer requete</button>
           <ul>
             <li>
               <input type="checkbox" name="description" id="description" onClick={this.changeDescription} /><label for="description">Description / stars</label>

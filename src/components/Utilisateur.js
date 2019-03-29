@@ -16,15 +16,13 @@ export default class Utilisateur extends Component {
     }
 
     renderUserRepos(){
-        const{show} = this.state;
+        const{show, userRepos} = this.state;
         if(show){
             return(
                 <ul>
-                    <li>Phrase 1</li>
-                    <li>Phrase 2</li>
-                    <li>Phrase 3</li>
-                    <li>Phrase 4</li>
-                    <li>Phrase 5</li>
+                    {userRepos.map(userRepo =>
+                        <li><a href={userRepo.html_url}>{userRepo.name}</a></li>
+                        )}
                 </ul>
             )
         }
@@ -37,9 +35,11 @@ export default class Utilisateur extends Component {
         }
     }
 
-    handleClick(){
+    async handleClick(){
         const show = true;
-        this.setState({show})
+        const userRepos = await getUserRepos(this.props.user);
+
+        this.setState({show, userRepos})
     }
 
     async componentDidMount(){
@@ -49,7 +49,6 @@ export default class Utilisateur extends Component {
         /*
         // TODO : Mettre en place un onClick pour ne pas a avoir a surcharger de requetes
         const userName = await getUser(user);
-        const userRepos = await getUserRepos(user);
         this.setState({userName, userRepos});
         */
     }
@@ -64,6 +63,5 @@ export default class Utilisateur extends Component {
                 {this.renderUserRepos()}
 	  		</fieldset>
         )
-        
     }
 }
